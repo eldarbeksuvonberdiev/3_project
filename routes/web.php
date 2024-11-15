@@ -17,4 +17,4 @@ Route::post('/register',[LoginRegisterController::class,'register'])->name('regi
 Route::get('/verify',[LoginRegisterController::class,'verification'])->name('verification');
 Route::post('/verify',[LoginRegisterController::class,'verify'])->name('verify');
 
-Route::get('/',[UserController::class,'index'])->name('index');
+Route::get('/',[UserController::class,'index'])->name('user.index');

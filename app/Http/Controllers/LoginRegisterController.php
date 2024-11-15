@@ -6,6 +6,7 @@ use App\Models\LoginRegister;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendVerification;
 use App\Models\User;
+use App\Models\VerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,8 @@ class LoginRegisterController extends Controller
 
             $user = User::where($data)->first();
 
+            Auth::login($user);
+            
             if ($user->email_verified_at) {
 
                 return redirect()->route('index');
@@ -37,8 +40,13 @@ class LoginRegisterController extends Controller
 
                 $code = rand(100000, 1000000);
 
+                VerifyEmail::create([
+                    'user_id' => Auth::user()->id,
+                    'code' => $code
+                ]);
+
                 SendVerification::dispatch(Auth::user()->email, $code);
-                
+
                 return view('email_verification');
             }
         }
@@ -69,6 +77,11 @@ class LoginRegisterController extends Controller
 
         $code = rand(100000, 1000000);
 
+        VerifyEmail::create([
+            'user_id' => Auth::user()->id,
+            'code' => $code
+        ]);
+
         SendVerification::dispatch(Auth::user()->email, $code);
 
         return redirect()->route('verification');
@@ -77,5 +90,28 @@ class LoginRegisterController extends Controller
     public function verification()
     {
         return view('email_verification');
+    }
+
+    public function verify(Request $request){
+
+        $user = VerifyEmail::where('user_id',Auth::user()->id)->first();
+
+
+        if ($request->code == $user->code) {
+
+            $user->delete();
+
+            $the_user = User::where('id',Auth::user()->id)->first();
+
+            $the_user->update([
+                'email_verified_at' => now()
+            ]);
+            
+            Auth::login($the_user);
+
+
+            return redirect()->route('user.index');
+        }
+        
     }
 }
