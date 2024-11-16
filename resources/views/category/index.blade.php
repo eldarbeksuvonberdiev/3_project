@@ -8,6 +8,12 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
             Create
         </button>
+        @if (session('success') && session('status'))
+            <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -36,7 +42,7 @@
             <div class="row mt-3">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Students</h3>
+                        <h3 class="card-title">Categories</h3>
                     </div>
                     <div class="card-body p-0">
                         <table class="table table-striped">
@@ -69,13 +75,14 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{ route('category.update',$model->id) }}"
+                                                            <form action="{{ route('category.update', $model->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <div class="mb-3">
                                                                     <label for="name" class="form-label">Name</label>
-                                                                    <input type="text" class="form-control" name="name" id="name"
+                                                                    <input type="text" class="form-control"
+                                                                        name="name" id="name"
                                                                         value="{{ $model->name }}">
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -92,7 +99,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <form action="{{ route('category.destroy',$model->id) }}" method="POST">
+                                                <form action="{{ route('category.destroy', $model->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit">Delete</button>

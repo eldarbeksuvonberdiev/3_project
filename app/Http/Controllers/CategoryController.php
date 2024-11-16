@@ -34,7 +34,8 @@ class CategoryController extends Controller
             'name'
         ]);
         Category::create($request->all());
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'Category has been successfully created','status' => 'success']);
+        ;
     }
 
     /**
@@ -62,7 +63,7 @@ class CategoryController extends Controller
             'name'
         ]);
         $category->update($request->all());
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'Category has been successfully updated','status' => 'warning']);
     }
 
     /**
@@ -71,6 +72,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'Category has been successfully deleted','status' => 'danger']);
     }
 }

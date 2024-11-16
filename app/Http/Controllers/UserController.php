@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -30,7 +31,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:5'
+        ]);
+        $data['password'] = Hash::make($data['password']);
+        User::create($data);
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully created','status' => 'success']);
+
     }
 
     /**
@@ -44,24 +53,35 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit',['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => 'required|min:5'
+        ]);
+        $data['password'] = Hash::make($data['password']);
+
+        $user->update($data);
+        
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully updated','status' => 'warning']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully deleted','status' => 'danger']);
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -13,8 +14,9 @@ class AreaController extends Controller
      */
     public function index()
     {
+        $users = User::all();
         $models = Area::orderBy('id','desc')->paginate(10);
-        return view('area.index',['models' => $models]);
+        return view('area.index',['models' => $models,'users' => $users]);
     }
 
     /**
@@ -22,7 +24,8 @@ class AreaController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        return view('area.create',['users' => $users]);
     }
 
     /**
@@ -30,7 +33,12 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'user_id' => 'required|integer',
+            'name' => 'required'
+        ]);
+        Area::create($data);
+        return redirect()->route('area.index')->with(['success' => 'Area has been successfully created','status' => 'success']);
     }
 
     /**
@@ -46,7 +54,8 @@ class AreaController extends Controller
      */
     public function edit(Area $area)
     {
-        //
+        $users = User::all();
+        return view('area.edit',['model' => $area,'users' => $users]);
     }
 
     /**
@@ -54,7 +63,12 @@ class AreaController extends Controller
      */
     public function update(Request $request, Area $area)
     {
-        //
+        $data = $request->validate([
+            'user_id' => 'required|integer',
+            'name' => 'required'
+        ]);
+        $area->update($data);
+        return redirect()->route('area.index')->with(['success' => 'Area has been successfully updated','status' => 'warning']);
     }
 
     /**
@@ -62,6 +76,7 @@ class AreaController extends Controller
      */
     public function destroy(Area $area)
     {
-        //
+        $area->delete();
+        return redirect()->route('area.index')->with(['success' => 'Area has been successfully deleted','status' => 'danger']);
     }
 }
