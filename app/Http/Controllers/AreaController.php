@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $models = User::orderBy('id','desc')->paginate(10);
-        return view('user.index',['models' => $models]);
+        $models = Area::orderBy('id','desc')->paginate(10);
+        return view('area.index',['models' => $models]);
     }
 
     /**
@@ -36,7 +36,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Area $area)
     {
         //
     }
@@ -44,7 +44,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Area $area)
     {
         //
     }
@@ -52,7 +52,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Area $area)
     {
         //
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Area $area)
     {
         //
     }
