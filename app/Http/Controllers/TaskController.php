@@ -82,7 +82,7 @@ class TaskController extends Controller
             'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
             'deadline' => 'required|date'
         ]);
-        
+
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
@@ -94,7 +94,7 @@ class TaskController extends Controller
         }
         $task->update($data);
 
-        return redirect()->route('task.index')->with(['success' => 'Task has been successfully created','status' => 'success']);
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully updated','status' => 'warning']);
     }
 
     /**
@@ -102,6 +102,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully deleted','status' => 'danger']);
+
     }
 }
