@@ -46,4 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function area(){
+        return $this->hasOne(Area::class,'user_id');
+    }
 }

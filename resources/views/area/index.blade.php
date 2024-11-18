@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>User</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -33,6 +34,7 @@
                                     <tr>
                                         <td>{{ $model->id }}</td>
                                         <td>{{ $model->name }}</td>
+                                        <td>{{ $model->user->name }}</td>
                                         <td>
                                             <a href="{{ route('area.edit',$model->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
