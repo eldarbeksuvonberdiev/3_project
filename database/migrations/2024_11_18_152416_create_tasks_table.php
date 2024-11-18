@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('doer');
             $table->string('title');
-            $table->string('description');
-            $table->string('file');
+            $table->string('description')->nullable();
+            $table->string('file')->nullable();
             $table->date('deadline');
             $table->timestamps();
         });

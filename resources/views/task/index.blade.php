@@ -23,24 +23,34 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>User</th>
+                                    <th>Category</th>
+                                    <th>Doer</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>File</th>
+                                    <th>Deadline</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tasks as $model)
+                                @foreach ($tasks as $task)
                                     <tr>
-                                        <td>{{ $model->id }}</td>
-                                        <td>{{ $model->name }}</td>
-                                        <td>{{ $model->user->name }}</td>
+                                        <td>{{ $task->id }}</td>
+                                        <td>{{ $task->category->name }}</td>
+                                        <td>{{ $task->doer }}</td>
+                                        <td>{{ $task->title }}</td>
+                                        <td>{{ $task->description }}</td>
                                         <td>
-                                            <a href="{{ route('task.edit',$model->id) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ $task->file }}" download>FILE</a>
+                                        </td>
+                                        <td>{{ $task->deadline }}</td>
+                                        <td>
+                                            <a href="{{ route('task.edit',$task->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td>
                                             <div>
-                                                <form action="{{ route('task.destroy', $model->id) }}" method="POST">
+                                                <form action="{{ route('task.destroy', $task->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit">Delete</button>

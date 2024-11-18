@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -22,7 +23,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('task.create',['categories' => $categories]);
     }
 
     /**
@@ -30,7 +32,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'category_id' => 'required|integer',
+            'doer' => 'required',
+            'title' => 'required',
+            'description' => 'nullable',
+            'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
+            'deadline' => 'required|date'
+        ]);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date("y-m-d_h-i-s_"). time() .'.'. $extension;
+            $file->move('files/',$filename);
+            $data['file'] = 'files/'.$filename;
+        }
+        Task::create($data);
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully created','status' => 'success']);
     }
 
     /**
@@ -46,7 +65,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $categories = Category::all();
+        return view('task.edit',['task' => $task,'categories' => $categories]);
     }
 
     /**
@@ -54,7 +74,27 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $data = $request->validate([
+            'category_id' => 'required|integer',
+            'doer' => 'required',
+            'title' => 'required',
+            'description' => 'nullable',
+            'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
+            'deadline' => 'required|date'
+        ]);
+        
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date("y-m-d_h-i-s_"). time() .'.'. $extension;
+            $file->move('files/',$filename);
+            $data['file'] = 'files/'.$filename;
+        }else {
+            unset($data['file']);
+        }
+        $task->update($data);
+
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully created','status' => 'success']);
     }
 
     /**
