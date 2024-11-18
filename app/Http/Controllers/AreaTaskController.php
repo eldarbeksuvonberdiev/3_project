@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AreaTask;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class AreaTaskController extends Controller
@@ -13,7 +15,8 @@ class AreaTaskController extends Controller
      */
     public function index()
     {
-        //
+        $area_tasks = AreaTask::orderBy('id','desc')->paginate(10);
+        return view('area_task.index',['area_tasks' => $area_tasks]);
     }
 
     /**
@@ -21,7 +24,9 @@ class AreaTaskController extends Controller
      */
     public function create()
     {
-        //
+        $tasks = Task::all();
+        $areas = Area::all();
+        return view('area_task.create',['areas' => $areas,'tasks' => $tasks]);
     }
 
     /**
@@ -29,7 +34,17 @@ class AreaTaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'task_id' => 'required|integer',
+            'area_id' => 'required|array'
+        ]);
+        $area = $request->area_id;
+
+        $task = Task::where('id','=',$request->task_id)->first();
+        
+        $task->area_tasks->attach($area);
+        
+        return redirect()->route('area_task.index')->with(['success' => 'Area Tasks has been successfully created','status' => 'success']);
     }
 
     /**
