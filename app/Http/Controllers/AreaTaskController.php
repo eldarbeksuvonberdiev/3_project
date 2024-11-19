@@ -42,9 +42,9 @@ class AreaTaskController extends Controller
 
         $task = Task::where('id','=',$request->task_id)->first();
         
-        $task->area_tasks->attach($area);
+        $task->area_tasks()->attach($area);
         
-        return redirect()->route('area_task.index')->with(['success' => 'Area Tasks has been successfully created','status' => 'success']);
+        return redirect()->route('area_task.index')->with(['success' => 'Tasks has been successfully assigned to areas','status' => 'success']);
     }
 
     /**
@@ -76,6 +76,7 @@ class AreaTaskController extends Controller
      */
     public function destroy(AreaTask $areaTask)
     {
-        //
+        $areaTask->delete();
+        return redirect()->route('area_task.index')->with(['success' => 'Tasks has been successfully unassigned to area','status' => 'danger']);
     }
 }

@@ -16,6 +16,6 @@ class Area extends Model
     }
 
     public function area_tasks(){
-        return $this->hasMany(AreaTask::class,'area_id');
+        return $this->belongsToMany(AreaTask::class,'area_tasks','area_id','task_id');
     }
 }

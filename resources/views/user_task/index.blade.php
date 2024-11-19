@@ -1,12 +1,11 @@
 @extends('layouts.admin_main')
 
-@section('title', 'Area Task')
-@section('pagename', 'AreaTask')
+@section('title', 'User Task')
+@section('pagename', 'User Task')
 
 @section('content')
     <section class="content">
         <div class="container-fluid">
-            <a href="{{ route('area_task.create') }}" class="btn btn-primary">Create</a>
             @if (session('success') && session('status'))
                 <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
                     <strong>{{ session('success') }}</strong>
@@ -36,7 +35,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($area_tasks as $area_task)
+                                    @foreach ($tasks as $area_task)
                                         <tr>
                                             <td>{{ $area_task->id }}</td>
                                             <td>{{ $area_task->area->name }}</td>
@@ -81,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                {{ $area_tasks->links() }}
+                {{ $tasks->links() }}
             </div>
         </div>
     </section>

@@ -7,15 +7,28 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::orderBy('id','desc')->paginate(10);
-        return view('task.index',['tasks' => $tasks]);
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            
+            $start = $request->start_date;
+            
+            $end = $request->end_date;
+            
+            $tasks = Task::whereBetween('created_at', [$start, $end])->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            
+            $tasks = Task::orderBy('id', 'desc')->paginate(10);
+        }
+    
+        return view('task.index', ['tasks' => $tasks]);
     }
 
     /**

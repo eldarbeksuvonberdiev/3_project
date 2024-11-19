@@ -12,6 +12,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        <form method="GET" action="{{ route('task.index') }}">
+            @csrf
+            <div class="row mt-3">
+                <div class="col-5">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" class="form-control" name="start_date">
+                </div>
+                <div class="col-5">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" class="form-control" name="end_date">
+                </div>
+                <div class="col-1 mt-4">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
         <div class="container-fluid">
             <div class="row mt-3">
                 <div class="card">
@@ -46,7 +62,7 @@
                                         </td>
                                         <td>{{ $task->deadline }}</td>
                                         <td>
-                                            <a href="{{ route('task.edit',$task->id) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('task.edit', $task->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td>
                                             <div>
