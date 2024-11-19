@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AreaTask;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserTaskController extends Controller
 {
@@ -13,7 +15,8 @@ class UserTaskController extends Controller
      */
     public function index()
     {
-        $tasks = AreaTask::orderBy('id','desc')->paginate(10);
+        $user = User::where('id',Auth::user()->id)->first();
+        $tasks = AreaTask::where('area_id',$user->area)->orderBy('id','desc')->paginate(10);
         return view('user_task.index',['tasks' => $tasks]);
     }
 
