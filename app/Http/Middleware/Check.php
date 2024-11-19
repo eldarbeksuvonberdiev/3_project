@@ -17,9 +17,17 @@ class Check
     public function handle(Request $request, Closure $next, $role): Response
     {
         if (Auth::check()) {
-            if (Auth::user()->role == $role)
+
+            if (Auth::user()->role == $role){
+            
                 return $next($request);
-        } else {
+            }else {
+            
+                abort(403);
+            }
+        
+        }else {
+        
             return redirect()->route('login.main');
         }
     }
