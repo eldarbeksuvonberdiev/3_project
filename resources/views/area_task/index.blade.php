@@ -52,13 +52,13 @@
                                                     <button class="btn btn-danger" type="button">Returned</button>
                                                 @endif
                                                 @if ($area_task->status == 1 )
-                                                    <button class="btn btn-success" type="button">Given</button>
+                                                    <button class="btn btn-primary" type="button">Given</button>
                                                 @endif
                                                 @if ( $area_task->status == 2 )
                                                     <button class="btn btn-info" type="button">Doing</button>
                                                 @endif
                                                 @if ( $area_task->status == 3 )
-                                                    <button class="btn btn-danger" type="button">Returned</button>
+                                                    <button class="btn btn-success" type="button">Accepted</button>
                                                 @endif
                                             </td>
                                             {{-- <td>

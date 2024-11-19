@@ -14,11 +14,11 @@ class Check
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$role): Response
     {
         if (Auth::check()) {
 
-            if (Auth::user()->role == $role){
+            if (in_array(Auth::user()->role, $role)){
             
                 return $next($request);
             }else {

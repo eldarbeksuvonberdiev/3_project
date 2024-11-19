@@ -7,7 +7,7 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
-                <a href="{{ route('area.index') }}" class="btn btn-primary mb-3 ml-3">Back</a>
+                <a href="{{ route('area_task.index') }}" class="btn btn-primary mb-3 ml-3">Back</a>
                 <form action="{{ route('area_task.store') }}" method="post">
                     @csrf
                     <div class="col-12 mb-3">
@@ -28,7 +28,8 @@
                             <div class="form-group">
                                 <label>Area Select</label>
                                 <div class="select2-purple">
-                                    <select class="select2" multiple="multiple" data-placeholder="Select a State" name="area_id[]" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select class="select2" multiple="multiple" data-placeholder="Select a State"
+                                        name="area_id[]" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->name }}</option>
                                         @endforeach

@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Http\Controllers\Controller;
-use App\Models\AreaTask;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class UserTaskController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = User::where('id',Auth::user()->id)->first();
-        $tasks = AreaTask::where('area_id',$user->area->id)->orderBy('id','desc')->paginate(10);
-        return view('user_task.index',['tasks' => $tasks]);
+        //
     }
 
     /**
@@ -39,7 +35,7 @@ class UserTaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AreaTask $task)
+    public function show(Answer $answer)
     {
         //
     }
@@ -47,7 +43,7 @@ class UserTaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AreaTask $task)
+    public function edit(Answer $answer)
     {
         //
     }
@@ -55,19 +51,15 @@ class UserTaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AreaTask $user_task)
+    public function update(Request $request, Answer $answer)
     {
-        $request->validate([
-            'status' => 'required'
-        ]);
-        $user_task->update(['status' => $request->status]);
-        return redirect()->route('user_task.index');
-    }   
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AreaTask $task)
+    public function destroy(Answer $answer)
     {
         //
     }

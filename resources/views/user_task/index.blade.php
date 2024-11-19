@@ -30,48 +30,46 @@
                                         <th>Task FILE</th>
                                         <th>Task deadline</th>
                                         <th>Status</th>
-                                        {{-- <th>Edit</th> --}}
-                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tasks as $area_task)
+                                    @foreach ($tasks as $user_task)
                                         <tr>
-                                            <td>{{ $area_task->id }}</td>
-                                            <td>{{ $area_task->area->name }}</td>
-                                            <td>{{ $area_task->task->doer }}</td>
-                                            <td>{{ $area_task->task->title }}</td>
-                                            <td>{{ $area_task->task->description }}</td>
+                                            <td>{{ $user_task->id }}</td>
+                                            <td>{{ $user_task->area->name }}</td>
+                                            <td>{{ $user_task->task->doer }}</td>
+                                            <td>{{ $user_task->task->title }}</td>
+                                            <td>{{ $user_task->task->description }}</td>
                                             <td>
-                                                <a href="{{ $area_task->task->file }}">FILE</a>
+                                                <a href="{{ $user_task->task->file }}" download="">FILE</a>
                                             </td>
-                                            <td>{{ $area_task->task->deadline }}</td>
+                                            <td>{{ $user_task->task->deadline }}</td>
                                             <td>
-                                                @if ( $area_task->status == 0 )
-                                                    <button class="btn btn-danger" type="button">Returned</button>
+                                                @if ($user_task->status == 0)
+                                                    <input class="btn btn-danger" type="button">Returned</button>
                                                 @endif
-                                                @if ($area_task->status == 1 )
-                                                    <button class="btn btn-success" type="button">Given</button>
+
+                                                <form action="{{ route('user_task.update', $user_task->id) }}"
+                                                    method="post">
+                                                    @csrf 
+                                                    @method('PUT')
+                                                    @if ($user_task->status == 1)
+                                                        <input type="hidden" name="status" value="2">
+                                                        <button class="btn btn-primary" type="submit">Start</button>
+                                                    @endif
+                                                </form>
+                                                
+                                                @if ($user_task->status == 2)
+                                                    <input type="hidden" name="status" value="3">
+                                                    <button class="btn btn-info" type="submit">End Task</button>
                                                 @endif
-                                                @if ( $area_task->status == 2 )
-                                                    <button class="btn btn-info" type="button">Doing</button>
+                                                @if ($user_task->status == 3)
+                                                    <button class="btn btn-success" type="button">Finished</button>
                                                 @endif
-                                                @if ( $area_task->status == 3 )
-                                                    <button class="btn btn-danger" type="button">Returned</button>
+
+                                                @if ($user_task->status == 4)
+                                                    <button class="btn btn-success" type="button">Accepted</button>
                                                 @endif
-                                            </td>
-                                            {{-- <td>
-                                                <a href="{{ route('area_task.edit', $area_task->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                            </td> --}}
-                                            <td>
-                                                <div>
-                                                    <form action="{{ route('area_task.destroy', $area_task->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                                    </form>
-                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

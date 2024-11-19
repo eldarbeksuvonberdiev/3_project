@@ -19,12 +19,13 @@ Route::post('/register', [LoginRegisterController::class, 'register'])->name('re
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 // Route::get('/verify',[LoginRegisterController::class,'verification'])->name('verification');
 // Route::post('/verify',[LoginRegisterController::class,'verify'])->name('verify');
-Route::get('/', function () {
-    return view('layouts.admin_main');
-})->name('index');
+
+    Route::get('/', function () {
+        return view('layouts.admin_main');
+    })->name('index')->middleware('check:admin,user');
 
 Route::middleware('check:admin')->group(function () {
-
+    
     Route::resource('user', UserController::class);
 
     Route::resource('category', CategoryController::class);
