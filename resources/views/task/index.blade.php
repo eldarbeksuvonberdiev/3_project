@@ -6,6 +6,82 @@
 @section('content')
     <section class="content">
         <div class="col-12">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{ $tasks->count() }}</h3>
+
+                                    <p>All tasks</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="{{ route('task.index') }}" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>15</h3>
+
+                                    <p>2 days left</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>44</h3>
+
+                                    <p>Day left</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>65</h3>
+    
+                                    <p>Today</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>65</h3>
+    
+                                    <p>Deadline passed</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <a href="{{ route('task.create') }}" class="btn btn-primary">Create</a>
             @if (session('success') && session('status'))
                 <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
@@ -24,7 +100,7 @@
                         <label for="end_date">End Date:</label>
                         <input type="date" id="end_date" class="form-control" name="end_date">
                     </div>
-                    <div class="col-1 mt-4">
+                    <div class="col-1" style="margin-top: 31px">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
                 </div>
@@ -45,6 +121,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>File</th>
+                                        <th>Given time</th>
                                         <th>Deadline</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -61,6 +138,7 @@
                                             <td>
                                                 <a href="{{ $task->file }}" download>FILE</a>
                                             </td>
+                                            <td>{{ $task->created_at }}</td>
                                             <td>{{ $task->deadline }}</td>
                                             <td>
                                                 <a href="{{ route('task.edit', $task->id) }}"

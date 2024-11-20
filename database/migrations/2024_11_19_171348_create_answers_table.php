@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
             $table->foreignId('area_id')->constrained('areas')->cascadeOnDelete();
             $table->string('title');
-            $table->string('file');
-            $table->text('comment');
-            $table->integer('status');
+            $table->string('file')->nullable();
+            $table->text('comment')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

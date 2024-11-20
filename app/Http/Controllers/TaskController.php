@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\isEmpty;
-
 class TaskController extends Controller
 {
     /**
@@ -22,7 +20,7 @@ class TaskController extends Controller
             
             $end = $request->end_date;
             
-            $tasks = Task::whereBetween('created_at', [$start, $end])->orderBy('created_at', 'desc')->paginate(10);
+            $tasks = Task::whereBetween('deadline', [$start, $end])->orderBy('created_at', 'desc')->paginate(10);
         } else {
             
             $tasks = Task::orderBy('id', 'desc')->paginate(10);
@@ -119,4 +117,7 @@ class TaskController extends Controller
         return redirect()->route('task.index')->with(['success' => 'Task has been successfully deleted','status' => 'danger']);
 
     }
+
+
+
 }
