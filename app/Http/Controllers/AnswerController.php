@@ -13,7 +13,8 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+        $answers = Answer::orderBy('id','desc')->paginate(10);
+        return view('answer.index',['answers' => $answers]);
     }
 
     /**

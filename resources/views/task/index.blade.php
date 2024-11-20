@@ -9,7 +9,7 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-2 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
                                     <h3>{{ $deadlines->total_tasks }}</h3>

@@ -41,6 +41,8 @@ Route::middleware('check:admin')->group(function () {
     Route::resource('task', TaskController::class);
 
     Route::resource('area_task', AreaTaskController::class);
+
+    Route::resource('answer',AnswerController::class);
 });
 
 

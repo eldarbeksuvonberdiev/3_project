@@ -77,7 +77,7 @@ class UserTaskController extends Controller
             'task_id' => $user_task->task_id,
             'area_id' => $user_task->area_id,
             'title' => $data['title'],
-            'file' => $data['file']
+            'file' => $data['file'],
         ]);
 
         $user_task->update([

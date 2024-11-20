@@ -10,6 +10,7 @@ class Answer extends Model
         'task_id',
         'area_id',
         'title',
+        'file',
         'comment',
         'status'
     ];

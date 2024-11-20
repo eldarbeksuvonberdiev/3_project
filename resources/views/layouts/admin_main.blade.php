@@ -63,7 +63,7 @@
             <a href="#" class="brand-link" style="text-decoration: none">
                 <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Project</span>
+                <span class="brand-text font-weight-light">{{ auth()->user()->name }}</span>
             </a>
 
             <div class="sidebar">
@@ -116,6 +116,14 @@
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Tasks for Area
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('answer.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Result
                                     </p>
                                 </a>
                             </li>
