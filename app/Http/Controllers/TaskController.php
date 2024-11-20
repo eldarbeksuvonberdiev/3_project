@@ -124,10 +124,8 @@ class TaskController extends Controller
     {
 
         $deadlines = $this->getTaskCounts();
-
+        
         $tasks = $this->sortTasksByStatus($status);
-
-        dd($tasks);
 
         return view('task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
     }
@@ -135,7 +133,7 @@ class TaskController extends Controller
 
     public function getTaskCounts()
     {
-        return DB::table('tasks')->selectRaw("
+        return Task::selectRaw("
         COUNT(*) AS total_tasks,
         COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
         COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
@@ -147,8 +145,9 @@ class TaskController extends Controller
 
     public function sortTasksByStatus($status)
     {
-        $query = DB::table('tasks');
-
+        $query = DB::table('tasks')
+        ->join('categories', 'tasks.category_id', '=', 'categories.id')
+        ->select('tasks.*', 'categories.name as category_name');
         switch ($status) {
             case 2:
                 $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 2');
@@ -167,6 +166,6 @@ class TaskController extends Controller
                 break;
         }
 
-        return $query->orderBy('deadline', 'desc')->get();
+        return $query->orderBy('deadline', 'desc')->paginate(10);
     }
 }

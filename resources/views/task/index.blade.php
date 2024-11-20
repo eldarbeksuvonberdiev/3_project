@@ -33,7 +33,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="{{ route('task.sort',2) }}" class="small-box-footer">Show <i
+                                <a href="{{ route('task.sort', 2) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Show <i
+                                <a href="{{ route('task.sort', 1) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -55,13 +55,13 @@
                             <div class="small-box bg-danger">
                                 <div class="inner">
                                     <h3>{{ $deadlines->deadline_today }}</h3>
-    
+
                                     <p>Today</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Show <i
+                                <a href="{{ route('task.sort', 0) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -69,13 +69,13 @@
                             <div class="small-box bg-danger">
                                 <div class="inner">
                                     <h3>{{ $deadlines->deadline_passed }}</h3>
-    
+
                                     <p>Deadline passed</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Show <i
+                                <a href="{{ route('task.sort', -1) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -128,33 +128,46 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tasks as $task)
+                                    @if ($tasks->isNotEmpty())
+                                        @foreach ($tasks as $task)
+                                            <tr>
+                                                <td>{{ $task->id }}</td>
+                                                <td>
+                                                    @if ($task instanceof App\Models\Task)
+                                                        {{ $task->category ? $task->category->name : 'No category' }}
+                                                    @else
+                                                        {{ $task->category_name ?? 'No category' }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $task->doer }}</td>
+                                                <td>{{ $task->title }}</td>
+                                                <td>{{ $task->description }}</td>
+                                                <td>
+                                                    <a href="{{ $task->file }}" download>FILE</a>
+                                                </td>
+                                                <td>{{ $task->created_at }}</td>
+                                                <td>{{ $task->deadline }}</td>
+                                                <td>
+                                                    <a href="{{ route('task.edit', $task->id) }}"
+                                                        class="btn btn-warning">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <form action="{{ route('task.destroy', $task->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $task->id }}</td>
-                                            <td>{{ $task->category->name }}</td>
-                                            <td>{{ $task->doer }}</td>
-                                            <td>{{ $task->title }}</td>
-                                            <td>{{ $task->description }}</td>
-                                            <td>
-                                                <a href="{{ $task->file }}" download>FILE</a>
-                                            </td>
-                                            <td>{{ $task->created_at }}</td>
-                                            <td>{{ $task->deadline }}</td>
-                                            <td>
-                                                <a href="{{ route('task.edit', $task->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <form action="{{ route('task.destroy', $task->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </td>
+                                            <td colspan="10" class="text-center">No tasks available.</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
