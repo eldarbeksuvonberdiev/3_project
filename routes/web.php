@@ -36,8 +36,9 @@ Route::middleware('check:admin')->group(function () {
 
     Route::resource('area', AreaController::class);
 
+    Route::get('task-sort/{status}', [TaskController::class,'sort'])->name('task.sort');
+
     Route::resource('task', TaskController::class);
-    Route::get('task/{status}', [TaskController::class,'sort'])->name('task.sort');
 
     Route::resource('area_task', AreaTaskController::class);
 });

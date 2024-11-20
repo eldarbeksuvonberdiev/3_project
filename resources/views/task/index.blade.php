@@ -12,7 +12,7 @@
                         <div class="col-lg-3 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>{{ $tasks->count() }}</h3>
+                                    <h3>{{ $deadlines->total_tasks }}</h3>
 
                                     <p>All tasks</p>
                                 </div>
@@ -26,21 +26,21 @@
                         <div class="col-lg-2 col-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>15</h3>
+                                    <h3>{{ $deadlines->two_days_left }}</h3>
 
                                     <p>2 days left</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Show <i
+                                <a href="{{ route('task.sort',2) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                         <div class="col-lg-2 col-6">
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3>44</h3>
+                                    <h3>{{ $deadlines->one_day_left }}</h3>
 
                                     <p>Day left</p>
                                 </div>
@@ -54,7 +54,7 @@
                         <div class="col-lg-2 col-6">
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>65</h3>
+                                    <h3>{{ $deadlines->deadline_today }}</h3>
     
                                     <p>Today</p>
                                 </div>
@@ -68,7 +68,7 @@
                         <div class="col-lg-2 col-6">
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>65</h3>
+                                    <h3>{{ $deadlines->deadline_passed }}</h3>
     
                                     <p>Deadline passed</p>
                                 </div>

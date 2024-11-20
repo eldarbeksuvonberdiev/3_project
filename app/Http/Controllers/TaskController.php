@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -15,18 +16,20 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            
+
             $start = $request->start_date;
-            
+
             $end = $request->end_date;
-            
+
             $tasks = Task::whereBetween('deadline', [$start, $end])->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            
+
             $tasks = Task::orderBy('id', 'desc')->paginate(10);
         }
-    
-        return view('task.index', ['tasks' => $tasks]);
+
+        $deadlines = $this->getTaskCounts();
+
+        return view('task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
     }
 
     /**
@@ -35,7 +38,7 @@ class TaskController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('task.create',['categories' => $categories]);
+        return view('task.create', ['categories' => $categories]);
     }
 
     /**
@@ -55,12 +58,12 @@ class TaskController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
-            $filename = date("y-m-d_h-i-s_"). time() .'.'. $extension;
-            $file->move('files/',$filename);
-            $data['file'] = 'files/'.$filename;
+            $filename = date("y-m-d_h-i-s_") . time() . '.' . $extension;
+            $file->move('files/', $filename);
+            $data['file'] = 'files/' . $filename;
         }
         Task::create($data);
-        return redirect()->route('task.index')->with(['success' => 'Task has been successfully created','status' => 'success']);
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully created', 'status' => 'success']);
     }
 
     /**
@@ -77,7 +80,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $categories = Category::all();
-        return view('task.edit',['task' => $task,'categories' => $categories]);
+        return view('task.edit', ['task' => $task, 'categories' => $categories]);
     }
 
     /**
@@ -97,15 +100,15 @@ class TaskController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
-            $filename = date("y-m-d_h-i-s_"). time() .'.'. $extension;
-            $file->move('files/',$filename);
-            $data['file'] = 'files/'.$filename;
-        }else {
+            $filename = date("y-m-d_h-i-s_") . time() . '.' . $extension;
+            $file->move('files/', $filename);
+            $data['file'] = 'files/' . $filename;
+        } else {
             unset($data['file']);
         }
         $task->update($data);
 
-        return redirect()->route('task.index')->with(['success' => 'Task has been successfully updated','status' => 'warning']);
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully updated', 'status' => 'warning']);
     }
 
     /**
@@ -114,10 +117,56 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect()->route('task.index')->with(['success' => 'Task has been successfully deleted','status' => 'danger']);
+        return redirect()->route('task.index')->with(['success' => 'Task has been successfully deleted', 'status' => 'danger']);
+    }
 
+    public function sort($status)
+    {
+
+        $deadlines = $this->getTaskCounts();
+
+        $tasks = $this->sortTasksByStatus($status);
+
+        dd($tasks);
+
+        return view('task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
     }
 
 
+    public function getTaskCounts()
+    {
+        return DB::table('tasks')->selectRaw("
+        COUNT(*) AS total_tasks,
+        COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
+        COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
+        COUNT(CASE WHEN DATE(deadline) = CURDATE() THEN 1 END) AS deadline_today,
+        COUNT(CASE WHEN deadline < CURDATE() THEN 1 END) AS deadline_passed
+    ")->first();
+    }
 
+
+    public function sortTasksByStatus($status)
+    {
+        $query = DB::table('tasks');
+
+        switch ($status) {
+            case 2:
+                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 2');
+                break;
+
+            case 1:
+                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 1');
+                break;
+
+            case 0:
+                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 0');
+                break;
+
+            case -1:
+                $query->whereRaw('DATEDIFF(deadline, CURDATE()) < 0');
+                break;
+        }
+
+        return $query->orderBy('deadline', 'desc')->get();
+    }
 }
