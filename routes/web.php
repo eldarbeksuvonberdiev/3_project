@@ -48,7 +48,10 @@ Route::middleware('check:admin')->group(function () {
 Route::middleware('check:user')->group(function () {
 
     Route::get('profile',[UserController::class,'profileIndex'])->name('profile.index');
+
     Route::post('profile-update/{user}',[UserController::class,'profileUpdate'])->name('profile.update');
+    
+    Route::get('user_task_sort/{status}', [UserTaskController::class,'sort'])->name('user_task.sort');
 
     Route::resource('user_task', UserTaskController::class);
 });

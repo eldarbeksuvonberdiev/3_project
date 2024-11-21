@@ -6,6 +6,86 @@
 @section('content')
     <section class="content">
         <div class="container-fluid">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{ $deadlines->total_tasks }}</h3>
+
+                                    <p>All tasks</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="{{ route('user_task.index') }}" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>{{ $deadlines->two_days_left }}</h3>
+
+                                    <p>2 days left</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                {{-- {{ route('user_task.sort', 2) }} --}}
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>{{ $deadlines->one_day_left }}</h3>
+
+                                    <p>Day left</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                {{-- {{ route('user_task.sort', 1) }} --}}
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{ $deadlines->deadline_today }}</h3>
+
+                                    <p>Today</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                {{-- {{ route('user_task.sort', 0) }} --}}
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{ $deadlines->deadline_passed }}</h3>
+
+                                    <p>Deadline passed</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                {{-- {{ route('user_task.sort', -1) }} --}}
+                                <a href="#" class="small-box-footer">Show <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             @if (session('success') && session('status'))
                 <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
                     <strong>{{ session('success') }}</strong>
@@ -97,20 +177,30 @@
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{{ route('user_task.update', $user_task->id) }}" method="POST" enctype="multipart/form-data">
+                                                                    <form
+                                                                        action="{{ route('user_task.update', $user_task->id) }}"
+                                                                        method="POST" enctype="multipart/form-data">
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <div class="mb-3">
-                                                                            <label for="title" class="form-label">Title of answer</label>
-                                                                            <input type="text" name="title" class="form-control" id="title" placeholder="Title">
+                                                                            <label for="title" class="form-label">Title
+                                                                                of answer</label>
+                                                                            <input type="text" name="title"
+                                                                                class="form-control" id="title"
+                                                                                placeholder="Title">
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="file" class="form-label">FILE</label>
-                                                                            <input type="file" class="form-control" name="file" id="file">
+                                                                            <label for="file"
+                                                                                class="form-label">FILE</label>
+                                                                            <input type="file" class="form-control"
+                                                                                name="file" id="file">
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Submit</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
