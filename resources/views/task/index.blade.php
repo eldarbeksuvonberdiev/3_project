@@ -133,20 +133,16 @@
                                             <tr>
                                                 <td>{{ $task->id }}</td>
                                                 <td>
-                                                    @if ($task instanceof App\Models\Task)
-                                                        {{ $task->category ? $task->category->name : 'No category' }}
-                                                    @else
-                                                        {{ $task->category_name ?? 'No category' }}
-                                                    @endif
+                                                    {{ $task->category->name}}
                                                 </td>
-                                                <td>{{ $task->doer }}</td>
-                                                <td>{{ $task->title }}</td>
-                                                <td>{{ $task->description }}</td>
+                                                <td>{{ $task->task->doer }}</td>
+                                                <td>{{ $task->task->title }}</td>
+                                                <td>{{ $task->task->description }}</td>
                                                 <td>
-                                                    <a href="{{ $task->file }}" download>FILE</a>
+                                                    <a href="{{ $task->task->file }}" download="" class="btn btn-info">FILE</a>
                                                 </td>
                                                 <td>{{ $task->created_at }}</td>
-                                                <td>{{ $task->deadline }}</td>
+                                                <td>{{ $task->areaTask_deadline }}</td>
                                                 <td>
                                                     <a href="{{ route('task.edit', $task->id) }}"
                                                         class="btn btn-warning">Edit</a>

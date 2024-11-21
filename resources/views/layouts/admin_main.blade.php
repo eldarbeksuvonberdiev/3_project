@@ -119,14 +119,6 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('area_task.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'area_task' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Tasks for Area
-                                    </p>
-                                </a>
-                            </li>
                         @endif
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">

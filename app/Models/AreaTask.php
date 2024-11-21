@@ -14,6 +14,10 @@ class AreaTask extends Model
         'status'
     ];
 
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
     public function area(){
         return $this->belongsTo(Area::class,'area_id');
     }

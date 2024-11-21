@@ -14,7 +14,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('role','!=','admin')->get();
         $models = Area::orderBy('id','desc')->paginate(10);
         return view('area.index',['models' => $models,'users' => $users]);
     }
@@ -24,7 +24,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::where('role','!=','admin')->get();
         return view('area.create',['users' => $users]);
     }
 
