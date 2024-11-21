@@ -6,7 +6,6 @@
 @section('content')
     <section class="content">
         <div class="container-fluid">
-            <a href="{{ route('area_task.create') }}" class="btn btn-primary">Create</a>
             @if (session('success') && session('status'))
                 <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
                     <strong>{{ session('success') }}</strong>
@@ -58,7 +57,7 @@
                                                     <button class="btn btn-info" type="button">Doing</button>
                                                 @endif
                                                 @if ( $area_task->status == 3 )
-                                                    <button class="btn btn-success" type="button">Accepted</button>
+                                                    <button class="btn btn-success" type="button">Done </button>
                                                 @endif
                                             </td>
                                             {{-- <td>

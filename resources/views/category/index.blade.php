@@ -29,6 +29,11 @@
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" class="form-control" name="name" id="name"
                                         placeholder="Jahon yangiliklari...">
+                                    @error('name')
+                                        <div class="text-warning">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

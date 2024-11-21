@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -68,6 +69,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => 'required|min:5'
         ]);
+
         $data['password'] = Hash::make($data['password']);
 
         $user->update($data);
@@ -83,5 +85,28 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index')->with(['success' => 'User has been successfully deleted','status' => 'danger']);
 
+    }
+
+
+    public function profileIndex(){
+        $user = User::where('id','=',Auth::user()->id)->first();
+        return view('user.profile',['user' => $user]);
+    }
+
+    public function profileUpdate(Request $request,User $user){
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'. $user->id
+        ]);
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => 'string|min:5',
+                'c_password' => 'same:password'
+            ]);
+            $password = $request->password;
+            $data['password'] = Hash::make($password);
+        }
+        $user->update($data);
+        return redirect()->back();
     }
 }

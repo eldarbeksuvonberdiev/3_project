@@ -71,13 +71,13 @@
                                                     <input class="btn btn-danger" type="button">Returned</button>
                                                 @endif
 
-                                                @if ($user_task->status == 1)
+                                                {{-- @if ($user_task->status == 1)
                                                     <form action="{{ route('user_task.edit', $user_task->id) }}" method="post">
                                                         @csrf
                                                         <input type="hidden" name="status" value="2">
                                                         <button class="btn btn-primary" type="submit">Start</button>
                                                     </form>
-                                                @endif
+                                                @endif --}}
 
                                                 @if ($user_task->status == 2)
                                                     <button type="button" class="btn btn-info" data-bs-toggle="modal"

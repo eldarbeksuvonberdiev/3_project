@@ -78,6 +78,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('profile.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Profile
+                                    </p>
+                                </a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link">
@@ -116,14 +124,6 @@
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Tasks for Area
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('answer.index') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Result
                                     </p>
                                 </a>
                             </li>

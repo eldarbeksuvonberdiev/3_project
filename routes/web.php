@@ -42,11 +42,13 @@ Route::middleware('check:admin')->group(function () {
 
     Route::resource('area_task', AreaTaskController::class);
 
-    Route::resource('answer',AnswerController::class);
 });
 
 
 Route::middleware('check:user')->group(function () {
+
+    Route::get('profile',[UserController::class,'profileIndex'])->name('profile.index');
+    Route::post('profile-update/{user}',[UserController::class,'profileUpdate'])->name('profile.update');
 
     Route::resource('user_task', UserTaskController::class);
 });

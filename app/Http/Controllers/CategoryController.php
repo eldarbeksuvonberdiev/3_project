@@ -31,7 +31,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'
+            'name' => 'required'
         ]);
         Category::create($request->all());
         return redirect()->back()->with(['success' => 'Category has been successfully created','status' => 'success']);
