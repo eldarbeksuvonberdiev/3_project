@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('area_id')->constrained('areas')->cascadeOnDelete();
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->date('areaTask_deadline');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

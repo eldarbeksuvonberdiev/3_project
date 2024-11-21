@@ -71,7 +71,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false">
                         @if (auth()->user()->role == 'user')
                             <li class="nav-item">
-                                <a href="{{ route('user_task.index') }}" class="nav-link {{ Route::currentRouteName() == 'user_task.index' ? 'active' : '' }}" >
+                                <a href="{{ route('user_task.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'user_task' ? 'active' : '' }}" >
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         User Tasks 

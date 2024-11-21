@@ -35,7 +35,7 @@ class LoginRegisterController extends Controller
             return redirect()->route('index');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withErrors(['password'=> 'Password or Email is wrong']);
     }
 
     public function registerPage()

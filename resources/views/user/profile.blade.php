@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab" active>Settings</a>
+                                <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab" active>Settings</a>
                                 </li>
                             </ul>
                         </div>

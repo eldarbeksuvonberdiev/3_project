@@ -9,6 +9,8 @@ class AreaTask extends Model
     protected $fillable = [
         'area_id',
         'task_id',
+        'category_id',
+        'areaTask_deadline',
         'status'
     ];
 

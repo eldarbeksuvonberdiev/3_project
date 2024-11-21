@@ -111,40 +111,35 @@ class UserTaskController extends Controller
 
     public function getTaskCounts()
     {
-        return Task::join('area_tasks', 'tasks.id', '=', 'area_tasks.task_id')->where('area_tasks.area_id', Auth::user()->area->id)
-        ->selectRaw("
+        return AreaTask::where('area_id', Auth::user()->area->id)
+            ->selectRaw("
             COUNT(*) AS total_tasks,
-            COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
-            COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
-            COUNT(CASE WHEN DATE(deadline) = CURDATE() THEN 1 END) AS deadline_today,
-            COUNT(CASE WHEN deadline < CURDATE() THEN 1 END) AS deadline_passed
+            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
+            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
+            COUNT(CASE WHEN DATE(areaTask_deadline) = CURDATE() THEN 1 END) AS deadline_today,
+            COUNT(CASE WHEN areaTask_deadline < CURDATE() THEN 1 END) AS deadline_passed
         ")->first();
     }
 
 
     public function sortTasksByStatus($status)
     {
-        $query = Task::join('area_tasks', 'tasks.id', '=', 'area_tasks.task_id') 
-            ->join('categories', 'tasks.category_id', '=', 'categories.id')   
-            ->where('area_tasks.area_id', Auth::user()->area->id)            
-            ->select('tasks.*', 'categories.name as category_name');        
-    
+        $query = AreaTask::where('area_id', Auth::user()->area->id);
         switch ($status) {
             case 2:
-                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 2');        
+                $query->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 2');
                 break;
             case 1:
-                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 1');        
+                $query->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 1');
                 break;
             case 0:
-                $query->whereRaw('DATEDIFF(deadline, CURDATE()) = 0');        
+                $query->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 0');
                 break;
             case -1:
-                $query->whereRaw('DATEDIFF(deadline, CURDATE()) < 0');        
+                $query->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) < 0');
                 break;
         }
-    
-        return $query->orderBy('deadline', 'desc') ->paginate(10);               
+
+        return $query->orderBy('areaTask_deadline', 'desc')->paginate(10);
     }
-    
 }

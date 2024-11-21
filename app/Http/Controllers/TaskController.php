@@ -58,7 +58,6 @@ class TaskController extends Controller
             'category_id' => 'required|integer',
             'area_id' => 'required|array',
         ]);
-
         $areas = $data['area_id'];
 
         if ($request->hasFile('file')) {
@@ -69,11 +68,12 @@ class TaskController extends Controller
             $data['file'] = 'files/' . $filename;
         }
         $task = Task::create($data);
-
         foreach ($areas as $area) {
             AreaTask::create([
                 'area_id' => $area,
-                'task_id' => $task->id
+                'task_id' => $task->id,
+                'category_id' => $task->category_id,
+                'areaTask_deadline' => $task->deadline
             ]);
         }
 

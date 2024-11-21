@@ -51,7 +51,7 @@ Route::middleware('check:user')->group(function () {
 
     Route::post('profile-update/{user}',[UserController::class,'profileUpdate'])->name('profile.update');
     
-    Route::get('user_task_sort/{status}', [UserTaskController::class,'sort'])->name('user_task.sort');
+    Route::get('user_task/{status}', [UserTaskController::class,'sort'])->name('user_task.sort');
 
     Route::resource('user_task', UserTaskController::class);
 });
