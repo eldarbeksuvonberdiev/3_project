@@ -111,16 +111,14 @@ class UserTaskController extends Controller
 
     public function getTaskCounts()
     {
-        return Task::join('area_tasks', 'tasks.id', '=', 'area_tasks.task_id')
-            ->where('area_tasks.area_id', Auth::user()->area->id)
-            ->selectRaw("
+        return Task::join('area_tasks', 'tasks.id', '=', 'area_tasks.task_id')->where('area_tasks.area_id', Auth::user()->area->id)
+        ->selectRaw("
             COUNT(*) AS total_tasks,
             COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
             COUNT(CASE WHEN DATEDIFF(deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
             COUNT(CASE WHEN DATE(deadline) = CURDATE() THEN 1 END) AS deadline_today,
             COUNT(CASE WHEN deadline < CURDATE() THEN 1 END) AS deadline_passed
-        ")
-            ->first();
+        ")->first();
     }
 
 
