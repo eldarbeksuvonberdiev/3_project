@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
+use App\Models\AreaTask;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -63,5 +65,38 @@ class AnswerController extends Controller
     public function destroy(Answer $answer)
     {
         //
+    }
+
+    public function action(Request $request, Answer $answer){
+        $data = $request->validate([
+            'comment' => 'required|max:255'
+        ]);
+
+        if ($request->action == 'accept') {
+        
+            $answer->update([
+                'comment' => $request->comment,
+                'status' => 2
+            ]);
+        
+            $area_task = AreaTask::where('task_id','=',$answer->task_id)->first();
+        
+            $area_task->update([
+                'status' => 4
+            ]);
+        } else {
+            $answer->update([
+                'comment' => $request->comment,
+                'status' => 0
+            ]);
+        
+            $area_task = AreaTask::where('task_id','=',$answer->task_id)->first();
+        
+            $area_task->update([
+                'status' => 0
+            ]);
+        }
+        return redirect()->back();
+        
     }
 }

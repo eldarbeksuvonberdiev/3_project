@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\AreaTaskController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\TaskController;
@@ -40,7 +39,7 @@ Route::middleware('check:admin')->group(function () {
 
     Route::resource('task', TaskController::class);
 
-    Route::resource('area_task', AreaTaskController::class);
+    Route::post('answer/{answer}',[AnswerController::class,'action'])->name('answer.action');
 
 });
 
@@ -54,4 +53,6 @@ Route::middleware('check:user')->group(function () {
     Route::get('user_task/{status}', [UserTaskController::class,'sort'])->name('user_task.sort');
 
     Route::resource('user_task', UserTaskController::class);
+
+    Route::post('user_task/{user_task}', [UserTaskController::class,'start'])->name('user_task.start');
 });

@@ -138,8 +138,17 @@ class UserTaskController extends Controller
             case -1:
                 $query->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) < 0');
                 break;
+            case 5:
+                break;
         }
 
         return $query->orderBy('areaTask_deadline', 'desc')->paginate(10);
+    }
+
+    public function start(Request $request, AreaTask $user_task){
+        $user_task->update([
+            'status' => $request->status
+        ]);
+        return redirect()->back();
     }
 }

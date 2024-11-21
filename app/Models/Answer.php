@@ -14,4 +14,8 @@ class Answer extends Model
         'comment',
         'status'
     ];
+
+    public function task(){
+        return $this->belongsTo(Task::class,'task_id');
+    }
 }

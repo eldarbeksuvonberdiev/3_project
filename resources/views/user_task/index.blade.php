@@ -19,7 +19,7 @@
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="{{ route('user_task.index') }}" class="small-box-footer">Show <i
+                                <a href="{{ route('user_task.sort', 5) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -121,40 +121,63 @@
                                                 <td>{{ $user_task->task->deadline }}</td>
                                                 <td>
                                                     @if ($user_task->status == 0)
-                                                        <input class="btn btn-danger" type="button">Returned</button>
-                                                    @endif
-                                                    @if ($user_task->status == 1)
-                                                        <input type="hidden" name="status" value="2">
-                                                        <button class="btn btn-primary" type="submit">Given</button>
-                                                    @endif
-
-                                                    @if ($user_task->status == 2)
+                                                        <button class="btn btn-danger" type="button">Returned</button>
+                                                    @elseif ($user_task->status == 1)
+                                                        <button class="btn btn-primary" type="button">Given</button>
+                                                    @elseif ($user_task->status == 2)
                                                         <button class="btn btn-warning" type="button">Started</button>
-                                                    @endif
-
-                                                    @if ($user_task->status == 3)
+                                                    @elseif ($user_task->status == 3)
                                                         <button class="btn btn-info" type="button">Finished</button>
-                                                    @endif
-
-                                                    @if ($user_task->status == 4)
+                                                    @else
                                                         <button class="btn btn-success" type="button">Accepted</button>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($user_task->status == 0)
-                                                        <input class="btn btn-danger" type="button">Returned</button>
-                                                    @endif
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#inprogress{{ $user_task->id }}"> Read the
+                                                            comment </button>
 
-                                                    @if ($user_task->status == 1)
-                                                        <form action="#" method="post">
+                                                        <div class="modal fade" id="inprogress{{ $user_task->id }}"
+                                                            data-bs-backdrop="static" data-bs-keyboard="false"
+                                                            tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5"
+                                                                            id="staticBackdropLabel">Comment</h1>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="mb-3">
+                                                                            <label for="title"
+                                                                                class="form-label">Comment</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="title"
+                                                                                value="{{ $user_task->answer->comment }}"
+                                                                                readonly>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @elseif ($user_task->status == 1)
+                                                        <form action="{{ route('user_task.start', $user_task->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             <input type="hidden" name="status" value="2">
-                                                            <button class="btn btn-primary" type="button">Start</button>
+                                                            <button class="btn btn-primary" type="submit">Start</button>
                                                         </form>
-                                                    @endif
-
-                                                    @if ($user_task->status == 2)
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                    @elseif ($user_task->status == 2)
+                                                        <button type="button" class="btn btn-info"
+                                                            data-bs-toggle="modal"
                                                             data-bs-target="#inprogress{{ $user_task->id }}">
                                                             Finish
                                                         </button>
@@ -167,51 +190,44 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h1 class="modal-title fs-5"
-                                                                            id="staticBackdropLabel">
-                                                                            Modal title</h1>
+                                                                            id="staticBackdropLabel"> Modal title</h1>
                                                                         <button type="button" class="btn-close"
                                                                             data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form
-                                                                            action="{{ route('user_task.update', $user_task->id) }}"
-                                                                            method="POST" enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            @method('PUT')
-                                                                            <div class="mb-3">
-                                                                                <label for="title"
-                                                                                    class="form-label">Title
-                                                                                    of answer</label>
-                                                                                <input type="text" name="title"
-                                                                                    class="form-control" id="title"
-                                                                                    placeholder="Title">
-                                                                            </div>
-                                                                            <div class="mb-3">
-                                                                                <label for="file"
-                                                                                    class="form-label">FILE</label>
-                                                                                <input type="file" class="form-control"
-                                                                                    name="file" id="file">
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary">Submit</button>
-                                                                            </div>
-                                                                        </form>
+                                                                        <div class="modal-body">
+                                                                            <form action="{{ route('answer.action', $user_task->id) }}" method="POST"> @csrf
+                                                                                <div class="mb-3">
+                                                                                    <label for="comment"
+                                                                                        class="form-label">Comment</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="comment" name="comment"
+                                                                                        style="height: 10vh" required>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-success"
+                                                                                        name="action"
+                                                                                        value="accept">Accept</button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger"
+                                                                                        name="action"
+                                                                                        value="reject">Reject</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    @endif
-
-                                                    @if ($user_task->status == 3)
+                                                    @elseif ($user_task->status == 3)
                                                         <button class="btn btn-success" type="button">Waiting</button>
-                                                    @endif
-
-                                                    @if ($user_task->status == 4)
+                                                    @else
                                                         <button class="btn btn-success" type="button">Accepted</button>
                                                     @endif
                                                 </td>

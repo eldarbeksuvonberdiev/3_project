@@ -26,4 +26,8 @@ class AreaTask extends Model
         return $this->belongsTo(Task::class,'task_id');
     }
 
+    public function answer(){
+        return $this->hasOne(Answer::class,'task_id','task_id');
+    }
+
 }
