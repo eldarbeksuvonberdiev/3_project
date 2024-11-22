@@ -190,37 +190,31 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h1 class="modal-title fs-5"
-                                                                            id="staticBackdropLabel"> Modal title</h1>
+                                                                            id="staticBackdropLabel">Finish the Task</h1>
                                                                         <button type="button" class="btn-close"
                                                                             data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <div class="modal-body">
-                                                                            <form action="{{ route('answer.action', $user_task->id) }}" method="POST"> @csrf
-                                                                                <div class="mb-3">
-                                                                                    <label for="comment"
-                                                                                        class="form-label">Comment</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        id="comment" name="comment"
-                                                                                        style="height: 10vh" required>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-success"
-                                                                                        name="action"
-                                                                                        value="accept">Accept</button>
-                                                                                    <button type="button"
-                                                                                        class="btn btn-secondary"
-                                                                                        data-bs-dismiss="modal">Close</button>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger"
-                                                                                        name="action"
-                                                                                        value="reject">Reject</button>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
+                                                                        <form action="{{ route('user_task.update',$user_task->id) }}" method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                            <div class="mb-3">
+                                                                                <label for="title" class="form-label">Title</label>
+                                                                                <input type="text" class="form-control" id="title" name="title" placeholder="Nimadir">
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label for="file" class="form-label">FILE</label>
+                                                                                <input type="file" class="form-control" id="file" name="file">
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Close the Task</button>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>

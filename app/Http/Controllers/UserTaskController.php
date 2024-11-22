@@ -76,7 +76,7 @@ class UserTaskController extends Controller
             $file->move('files/', $filename);
             $data['file'] = 'files/' . $filename;
         }
-        $answeer = Answer::create([
+        Answer::create([
             'task_id' => $user_task->task_id,
             'area_id' => $user_task->area_id,
             'title' => $data['title'],
