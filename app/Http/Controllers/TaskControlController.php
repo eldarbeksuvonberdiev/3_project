@@ -31,9 +31,9 @@ class TaskControlController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function sort(Area $area, Category $category)
     {
-        //
+        dd($area,$category);
     }
 
     /**

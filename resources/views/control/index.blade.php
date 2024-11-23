@@ -110,7 +110,7 @@
                                             <td>{{ $area->name }}</td>
                                             @foreach ($categories as $category)
                                                 <td>
-                                                    <a href="#" type="button" class="btn btn-{{ $button }}">{{ $area_task->where('category_id','=',$category->id)->where('area_id','=',$area->id)->count() }}</a>
+                                                    <a href="{{ route('control.task',[$area->id,$category->id]) }}" type="submit" target="_blank" class="btn btn-{{ $button }}">{{ $area_task->where('category_id','=',$category->id)->where('area_id','=',$area->id)->count() }}</a>
                                                 </td>
                                             @endforeach
                                         </tr>

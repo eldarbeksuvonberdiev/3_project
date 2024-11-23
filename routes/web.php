@@ -40,7 +40,10 @@ Route::middleware('check:admin')->group(function () {
 
     Route::resource('task', TaskController::class);
 
-    Route::resource('control', TaskControlController::class);
+    Route::get('control', [TaskControlController::class,'index'])->name('control.index');
+
+    Route::get('control/{area}/{category}', [TaskControlController::class,'sort'])->name('control.task');
+
 
     Route::post('answer/{answer}',[AnswerController::class,'action'])->name('answer.action');
 
