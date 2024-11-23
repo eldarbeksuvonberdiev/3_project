@@ -41,8 +41,8 @@ Route::middleware('check:admin')->group(function () {
     Route::resource('task', TaskController::class);
 
     Route::get('control', [TaskControlController::class,'index'])->name('control.index');
-
-    Route::get('control/{area}/{category}/{status}', [TaskControlController::class,'sort'])->name('control.task');
+    Route::get('control/{area}/{category}/{status}', [TaskControlController::class,'task'])->name('control.task');
+    Route::get('control-sort/{status}', [TaskControlController::class,'sort'])->name('control.sort');
 
 
     Route::post('answer/{answer}',[AnswerController::class,'action'])->name('answer.action');

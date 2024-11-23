@@ -19,7 +19,7 @@
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="{{ route('task.index') }}" class="small-box-footer">Show <i
+                                <a href="{{ route('control.index') }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="{{ route('task.sort', 2) }}" class="small-box-footer">Show <i
+                                <a href="{{ route('control.sort', 2) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('task.sort', 1) }}" class="small-box-footer">Show <i
+                                <a href="{{ route('control.sort', 1) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
-                                <a href="{{ route('task.sort', 0) }}" class="small-box-footer">Show <i
+                                <a href="{{ route('control.sort', 0) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -75,19 +75,13 @@
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
-                                <a href="{{ route('task.sort', -1) }}" class="small-box-footer">Show <i
+                                <a href="{{ route('control.sort', -1) }}" class="small-box-footer">Show <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            @if (session('success') && session('status'))
-                <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
-                    <strong>{{ session('success') }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="card">
@@ -110,7 +104,9 @@
                                             <td>{{ $area->name }}</td>
                                             @foreach ($categories as $category)
                                                 <td>
-                                                    <a href="{{ route('control.task',[$area->id,$category->id,$status]) }}" type="submit" target="_blank" class="btn btn-{{ $button }}">{{ $area_task->where('category_id','=',$category->id)->where('area_id','=',$area->id)->count() }}</a>
+                                                    <a href="{{ route('control.task', [$area->id, $category->id, $status]) }}"
+                                                        type="submit" target="_blank"
+                                                        class="btn btn-{{ $button }}">{{ $area_task->where('category_id', '=', $category->id)->where('area_id', '=', $area->id)->count() }}</a>
                                                 </td>
                                             @endforeach
                                         </tr>
