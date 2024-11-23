@@ -119,6 +119,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('control.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'control' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Control
+                                    </p>
+                                </a>
+                            </li>
                         @endif
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">

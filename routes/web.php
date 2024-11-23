@@ -4,6 +4,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\TaskControlController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTaskController;
@@ -38,6 +39,8 @@ Route::middleware('check:admin')->group(function () {
     Route::get('task-sort/{status}', [TaskController::class,'sort'])->name('task.sort');
 
     Route::resource('task', TaskController::class);
+
+    Route::resource('control', TaskControlController::class);
 
     Route::post('answer/{answer}',[AnswerController::class,'action'])->name('answer.action');
 
