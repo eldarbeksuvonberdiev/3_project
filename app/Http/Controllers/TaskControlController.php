@@ -23,17 +23,23 @@ class TaskControlController extends Controller
         $deadlines = $task->getTaskCounts();
 
         $area_task = new AreaTask;
+
         $button = 'info';
 
-        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button]);
+        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button,'status' => 'all']);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function sort(Area $area, Category $category)
+    public function sort(Area $area, Category $category, string $status)
     {
-        dd($area,$category);
+        if ($status == 'all') {
+            
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->get();
+
+            return view('control.task',['tasks' => $tasks,'area_name' => $area->name]);
+        }
     }
 
     /**
