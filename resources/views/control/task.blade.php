@@ -1,7 +1,7 @@
 @extends('layouts.admin_main')
 
-@section('title', 'User')
-@section('pagename', 'User')
+@section('title', "$area_name Tasks")
+@section('pagename', "$area_name Tasks")
 
 @section('content')
     <section class="content">

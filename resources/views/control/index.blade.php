@@ -123,7 +123,7 @@
                                                                         'DATEDIFF(areaTask_deadline, CURDATE()) = 0',
                                                                     ),
                                                                     'passed' => $query->whereRaw(
-                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) = -1',
+                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) < 0',
                                                                     ),
                                                                     default => $query,
                                                                 };

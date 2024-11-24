@@ -35,15 +35,24 @@ class TaskControlController extends Controller
         if ($status == 'all') {
             
             $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->get();
+        }elseif ($status == 'two_days') {
 
-            return view('control.task',['tasks' => $tasks,'area_name' => $area->name]);
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 2')->get();
+        }elseif ($status == 'one_day') {
+            
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 1')->get();
+        }elseif ($status == 'today') {
+            
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 0')->get();
         }else {
-            return view('Men hozircha elsedaman');
+            
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) < 0')->get();
         }
+        return view('control.task',['tasks' => $tasks,'area_name' => $area->name]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Sort a newly created resource in storage.
      */
     public function sort(int $status)
     {
@@ -79,7 +88,7 @@ class TaskControlController extends Controller
                 break;
         }
 
-        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button,'status' => $status]);
+        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button,'status' => $stat]);
     }
 
 
