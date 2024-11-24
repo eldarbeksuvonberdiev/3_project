@@ -4,6 +4,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TaskControlController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,10 @@ Route::middleware('check:admin')->group(function () {
     Route::get('control/{area}/{category}/{status}', [TaskControlController::class,'task'])->name('control.task');
     Route::get('control-sort/{status}', [TaskControlController::class,'sort'])->name('control.sort');
 
+    Route::get('statistics',[StatisticsController::class,'index'])->name('statistics.index');
+    Route::get('statistics-filter',[StatisticsController::class,'filter'])->name('statistics.filter');
+
+    Route::get('category-statistics',[StatisticsController::class,'category_index'])->name('category_statistics.index');
 
     Route::post('answer/{answer}',[AnswerController::class,'action'])->name('answer.action');
 

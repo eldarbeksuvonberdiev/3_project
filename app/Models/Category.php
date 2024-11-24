@@ -13,4 +13,8 @@ class Category extends Model
     public function tasks(){
         return $this->hasMany(Task::class,'category_id');
     }
+
+    public function area_tasks(){
+        return $this->hasMany(AreaTask::class,'category_id');    
+    }
 }

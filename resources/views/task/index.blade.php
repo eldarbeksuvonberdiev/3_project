@@ -101,7 +101,7 @@
                         <input type="date" id="end_date" class="form-control" name="end_date">
                     </div>
                     <div class="col-1" style="margin-top: 31px">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%">Filter</button>
                     </div>
                 </div>
             </form>

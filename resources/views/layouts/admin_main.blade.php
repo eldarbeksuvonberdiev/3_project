@@ -127,6 +127,22 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('statistics.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'statistics' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Statistics by Category
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('category_statistics.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'category_statistics' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Statistics by C Status
+                                    </p>
+                                </a>
+                            </li>
                         @endif
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
