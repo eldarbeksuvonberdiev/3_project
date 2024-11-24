@@ -24,9 +24,7 @@ class TaskControlController extends Controller
 
         $area_task = new AreaTask;
 
-        $button = 'info';
-
-        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button,'status' => 'all']);
+        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => 'info','status' => 'all']);
     }
 
     /**
@@ -39,6 +37,8 @@ class TaskControlController extends Controller
             $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->get();
 
             return view('control.task',['tasks' => $tasks,'area_name' => $area->name]);
+        }else {
+            return view('Men hozircha elsedaman');
         }
     }
 
@@ -47,7 +47,39 @@ class TaskControlController extends Controller
      */
     public function sort(int $status)
     {
-        dd($status);
+        $categories = Category::all();
+
+        $areas = Area::orderBy('name', 'asc')->paginate(10);
+
+        $task = new TaskController;
+        $deadlines = $task->getTaskCounts();
+
+        $area_task = new AreaTask;
+
+        switch ($status) {
+            case '2':
+                $stat = 'two_days';
+                $button = 'success';
+                break;
+            case '1':
+                $stat = 'one_day';
+                $button = 'warning';
+                break;
+            case '0':
+                $stat = 'today';
+                $button = 'danger';
+                break;
+            case '-1':
+                $stat = 'passed';
+                $button = 'danger';
+                break;
+            
+            default:
+                abort(404);
+                break;
+        }
+
+        return view('control.index', ['categories' => $categories, 'areas' => $areas,'deadlines' => $deadlines,'area_task' => $area_task,'button' => $button,'status' => $status]);
     }
 
 

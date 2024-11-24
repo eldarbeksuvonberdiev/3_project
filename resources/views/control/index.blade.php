@@ -105,8 +105,34 @@
                                             @foreach ($categories as $category)
                                                 <td>
                                                     <a href="{{ route('control.task', [$area->id, $category->id, $status]) }}"
-                                                        type="submit" target="_blank"
-                                                        class="btn btn-{{ $button }}">{{ $area_task->where('category_id', '=', $category->id)->where('area_id', '=', $area->id)->count() }}</a>
+                                                        target="_blank" class="btn btn-{{ $button }}">
+                                                        @php
+                                                            $query = $area_task
+                                                                ->where('category_id', $category->id)
+                                                                ->where('area_id', $area->id);
+
+                                                            if ($status !== 'all') {
+                                                                $query = match ($status) {
+                                                                    'two_days' => $query->whereRaw(
+                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) = 2',
+                                                                    ),
+                                                                    'one_day' => $query->whereRaw(
+                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) = 1',
+                                                                    ),
+                                                                    'today' => $query->whereRaw(
+                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) = 0',
+                                                                    ),
+                                                                    'passed' => $query->whereRaw(
+                                                                        'DATEDIFF(areaTask_deadline, CURDATE()) = -1',
+                                                                    ),
+                                                                    default => $query,
+                                                                };
+                                                            }
+
+                                                            $count = $query->count();
+                                                        @endphp
+                                                        {{ $count }}
+                                                    </a>
                                                 </td>
                                             @endforeach
                                         </tr>
