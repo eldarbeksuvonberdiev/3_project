@@ -140,7 +140,6 @@ class TaskController extends Controller
         $deadlines = $this->getTaskCounts();
         
         $tasks = $this->sortTasksByStatus($status);
-
         return view('task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
     }
 

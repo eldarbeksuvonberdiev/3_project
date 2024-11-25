@@ -6,16 +6,26 @@
 @section('content')
     <section class="content">
         <div class="col-12">
-            <form method="GET" action="{{ route('statistics.filter') }}">
+            <form action="{{ route('statistics.filter') }}" method="GET">
                 @csrf
                 <div class="row mt-3">
                     <div class="col-5">
-                        <label for="start_date">Start Date:</label>
-                        <input type="date" id="start_date" class="form-control" name="start_date">
+                        <label for="start">Start Date:</label>
+                        <input type="date" id="start" class="form-control" name="start">
+                        @error('start')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-5">
-                        <label for="end_date">End Date:</label>
-                        <input type="date" id="end_date" class="form-control" name="end_date">
+                        <label for="end">End Date:</label>
+                        <input type="date" id="end" class="form-control" name="end">
+                        @error('end')
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     </div>
                     <div class="col-2" style="margin-top: 31px">
                         <button type="submit" class="btn btn-primary" style="width: 100%">Filter</button>
@@ -46,11 +56,13 @@
                                         <tr>
                                             <td>{{ $category->id }}</td>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ $category->area_tasks->count() }}</td>
-                                            <td>{{ $category->area_tasks->where('status', 2)->count() }}</td>
-                                            <td>{{ $category->area_tasks->where('status', 3)->count() }}</td>
-                                            <td>{{ $category->area_tasks->where('status', 4)->count() }}</td>
-                                            <td>{{ $category->area_tasks->where('status', 0)->count() }}</td>
+                                            <td>
+                                                {{ $area_task->where('category_id',$category->id)->where('status',1)->count() }}
+                                            </td>
+                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',2)->count() }}</td>
+                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',3)->count() }}</td>
+                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',4)->count() }}</td>
+                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',0)->count() }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
