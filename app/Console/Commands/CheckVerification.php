@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class CheckVerification extends Command
 {

@@ -65,8 +65,8 @@
                                                                         ->count();
                                                                 @endphp
                                                                 @if ($count > 0)
-                                                                    <a
-                                                                        style="background-color: blue; border-radius:5px; font-weight: bold">{{ $count }}</a>
+                                                                    <span
+                                                                        style="padding: 5px; background-color: blue; border-radius:5px; font-weight: bold;">{{ $count }}</span>
                                                                 @else
                                                                     {{ '0' }}
                                                                 @endif
@@ -82,8 +82,8 @@
                                                                         ->count();
                                                                 @endphp
                                                                 @if ($count > 0)
-                                                                    <a
-                                                                        style="background-color: skyblue; border-radius:5px; font-weight: bold">{{ $count }}</a>
+                                                                    <span
+                                                                        style="padding: 5px; background-color: skyblue; border-radius:5px; font-weight: bold;">{{ $count }}</span>
                                                                 @else
                                                                     {{ '0' }}
                                                                 @endif
@@ -99,8 +99,8 @@
                                                                         ->count();
                                                                 @endphp
                                                                 @if ($count > 0)
-                                                                    <a
-                                                                        style="background-color: yellow; border-radius:5px; font-weight: bold">{{ $count }}</a>
+                                                                    <span
+                                                                        style="padding: 5px; background-color: yellow; border-radius:5px; font-weight: bold;">{{ $count }}</span>
                                                                 @else
                                                                     {{ '0' }}
                                                                 @endif
@@ -116,8 +116,8 @@
                                                                         ->count();
                                                                 @endphp
                                                                 @if ($count > 0)
-                                                                    <a
-                                                                        style="background-color: green; border-radius:5px; font-weight: bold">{{ $count }}</a>
+                                                                    <span
+                                                                        style="padding: 5px; background-color: green; border-radius:5px; font-weight: bold;">{{ $count }}</span>
                                                                 @else
                                                                     {{ '0' }}
                                                                 @endif
@@ -133,8 +133,8 @@
                                                                         ->count();
                                                                 @endphp
                                                                 @if ($count > 0)
-                                                                    <a
-                                                                        style="background-color: red; border-radius:5px; font-weight: bold">{{ $count }}</a>
+                                                                    <span
+                                                                        style="padding: 5px; background-color: red; border-radius:5px; font-weight: bold;">{{ $count }}</span>
                                                                 @else
                                                                     {{ '0' }}
                                                                 @endif
@@ -155,7 +155,7 @@
                                                                     ->count();
                                                             @endphp
                                                             @if ($count > 0)
-                                                                <a style="background-color: blue; font-weight:bold; border-radius: 5px">{{ $count }}</a>
+                                                                <a style="padding: 5px; background-color: blue; font-weight:bold; border-radius: 5px">{{ $count }}</a>
                                                             @else
                                                                 {{ '0' }}
                                                             @endif
@@ -170,7 +170,7 @@
                                                                     ->count();
                                                             @endphp
                                                             @if ($count > 0)
-                                                                <a style="background-color: skyblue; font-weight:bold; border-radius: 5px">{{ $count }}</a>
+                                                                <a style="padding: 5px; background-color: skyblue; font-weight:bold; border-radius: 5px">{{ $count }}</a>
                                                             @else
                                                                 {{ '0' }}
                                                             @endif
@@ -185,7 +185,7 @@
                                                                     ->count();
                                                             @endphp
                                                             @if ($count > 0)
-                                                                <a style="background-color: yellow; font-weight:bold; border-radius: 5px">{{ $count }}</a>
+                                                                <a style="padding: 5px; background-color: yellow; font-weight:bold; border-radius: 5px">{{ $count }}</a>
                                                             @else
                                                                 {{ '0' }}
                                                             @endif
@@ -200,7 +200,7 @@
                                                                     ->count();
                                                             @endphp
                                                             @if ($count > 0)
-                                                                <a style="background-color: green; font-weight:bold; border-radius: 5px">{{ $count }}</a>
+                                                                <a style="padding: 5px; background-color: green; font-weight:bold; border-radius: 5px">{{ $count }}</a>
                                                             @else
                                                                 {{ '0' }}
                                                             @endif
@@ -215,7 +215,7 @@
                                                                     ->count();
                                                             @endphp
                                                             @if ($count > 0)
-                                                                <a style="background-color: red; font-weight:bold; border-radius: 5px">{{ $count }}</a>
+                                                                <a style="padding: 5px; background-color: red; font-weight:bold; border-radius: 5px">{{ $count }}</a>
                                                             @else
                                                                 {{ '0' }}
                                                             @endif

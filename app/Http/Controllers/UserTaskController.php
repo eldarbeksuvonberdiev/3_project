@@ -9,7 +9,6 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class UserTaskController extends Controller
 {
@@ -22,30 +21,6 @@ class UserTaskController extends Controller
         $tasks = AreaTask::where('area_id', $user->area->id)->orderBy('id', 'desc')->paginate(10);
         $deadlines = $this->getTaskCounts();
         return view('user_task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(AreaTask $task)
-    {
-        //
     }
 
     /**
@@ -88,14 +63,6 @@ class UserTaskController extends Controller
         ]);
 
         return redirect()->route('user_task.index')->with(['success' => 'Task status has been successfully changed', 'status' => 'success']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AreaTask $task)
-    {
-        //
     }
 
     public function sort($status)

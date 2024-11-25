@@ -139,7 +139,7 @@
                                 <a href="{{ route('category_statistics.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'category_statistics' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
-                                        Statistics by C Status
+                                        Statistics by Task Status
                                     </p>
                                 </a>
                             </li>
@@ -156,7 +156,7 @@
                 </nav>
             </div>
         </aside>
-        <div class="content-wrapper" style="background-color:grey">
+        <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">

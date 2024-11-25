@@ -23,12 +23,11 @@ class StatisticsController extends Controller
     {  
         $date = $request->validate([
             'start' => 'required|date',
-            'end' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
         ]);
         $categories = Category::all();
         $area_task = new AreaTask;
-        $area_task = $area_task->whereBetween('areaTask_deadline', [$date['start'], $date['end']]);
-        return view('statistics.index', ['categories' => $categories,'area_task' => $area_task]);
+        return view('statistics.index', ['categories' => $categories,'area_task' => $area_task, 'date' => $date]);
     }
 
     public function category_index(){

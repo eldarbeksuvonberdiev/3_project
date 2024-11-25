@@ -11,21 +11,21 @@
                 <div class="row mt-3">
                     <div class="col-5">
                         <label for="start">Start Date:</label>
-                        <input type="date" id="start" class="form-control" name="start">
+                        <input type="date" id="start" class="form-control" name="start" value="{{ old('start') }}">
                         @error('start')
-                            <div class="text-danger">
+                            <div class="text-warning">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
                     <div class="col-5">
                         <label for="end">End Date:</label>
-                        <input type="date" id="end" class="form-control" name="end">
+                        <input type="date" id="end" class="form-control" name="end" value="{{ old('end') }}">
                         @error('end')
-                        <div class="text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                            <div class="text-warning">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-2" style="margin-top: 31px">
                         <button type="submit" class="btn btn-primary" style="width: 100%">Filter</button>
@@ -57,12 +57,16 @@
                                             <td>{{ $category->id }}</td>
                                             <td>{{ $category->name }}</td>
                                             <td>
-                                                {{ $area_task->where('category_id',$category->id)->where('status',1)->count() }}
+                                                {{ $area_task->where('category_id', $category->id)->where('status', 1)->count() }}
                                             </td>
-                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',2)->count() }}</td>
-                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',3)->count() }}</td>
-                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',4)->count() }}</td>
-                                            <td>{{ $area_task->where('category_id',$category->id)->where('status',0)->count() }}</td>
+                                            <td>{{ $area_task->where('category_id', $category->id)->where('status', 2)->count() }}
+                                            </td>
+                                            <td>{{ $area_task->where('category_id', $category->id)->where('status', 3)->count() }}
+                                            </td>
+                                            <td>{{ $area_task->where('category_id', $category->id)->where('status', 4)->count() }}
+                                            </td>
+                                            <td>{{ $area_task->where('category_id', $category->id)->where('status', 0)->count() }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

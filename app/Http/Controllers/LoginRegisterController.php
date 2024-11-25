@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\LoginRegister;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Login\LoginRequest;
+use App\Http\Requests\Login\RegisterRequest;
 use App\Jobs\SendVerification;
 use App\Models\User;
 use App\Models\VerifyEmail;
@@ -19,12 +21,9 @@ class LoginRegisterController extends Controller
         return view('login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:5'
-        ]);
+        $data = $request->all();
 
         $user = User::where('email', $data['email'])->first();
 
@@ -32,7 +31,7 @@ class LoginRegisterController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('index');
+            return redirect()->route('index');  
         }
 
         return redirect()->back()->withErrors(['password'=> 'Password or Email is wrong']);
@@ -43,15 +42,10 @@ class LoginRegisterController extends Controller
         return view('register');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:5',
-            'confirm_password' => 'required|same:password'
-        ]);
-
+        $data = $request->all();
+        
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],

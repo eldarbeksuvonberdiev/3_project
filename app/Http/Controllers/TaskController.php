@@ -8,7 +8,6 @@ use App\Models\Area;
 use App\Models\AreaTask;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -148,10 +147,10 @@ class TaskController extends Controller
     {
         return AreaTask::selectRaw("
             COUNT(*) AS total_tasks,
-            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 2 THEN 1 END) AS two_days_left,
-            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 1 THEN 1 END) AS one_day_left,
-            COUNT(CASE WHEN DATE(areaTask_deadline) = CURDATE() THEN 1 END) AS deadline_today,
-            COUNT(CASE WHEN areaTask_deadline < CURDATE() THEN 1 END) AS deadline_passed
+            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 2 AND status != 3 THEN 1 END) AS two_days_left,
+            COUNT(CASE WHEN DATEDIFF(areaTask_deadline, CURDATE()) = 1 AND status != 3 THEN 1 END) AS one_day_left,
+            COUNT(CASE WHEN DATE(areaTask_deadline) = CURDATE() AND status != 3 THEN 1 END) AS deadline_today,
+            COUNT(CASE WHEN areaTask_deadline < CURDATE() AND status != 3 THEN 1 END) AS deadline_passed
         ")->first();
     }
 

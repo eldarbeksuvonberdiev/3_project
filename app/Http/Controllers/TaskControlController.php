@@ -37,16 +37,16 @@ class TaskControlController extends Controller
             $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->get();
         }elseif ($status == 'two_days') {
 
-            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 2')->get();
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 2')->whereIn('status',[1,2])->get();
         }elseif ($status == 'one_day') {
             
-            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 1')->get();
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 1')->whereIn('status',[3,4])->get();
         }elseif ($status == 'today') {
             
-            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 0')->get();
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) = 0')->whereIn('status',[3,4])->get();
         }else {
             
-            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) < 0')->get();
+            $tasks = AreaTask::where('category_id',$category->id)->where('area_id',$area->id)->whereRaw('DATEDIFF(areaTask_deadline, CURDATE()) < 0')->whereIn('status',[3,4])->get();
         }
         return view('control.task',['tasks' => $tasks,'area_name' => $area->name]);
     }

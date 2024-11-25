@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Area\AreaStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,12 +32,9 @@ class AreaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AreaStoreRequest $request)
     {
-        $data = $request->validate([
-            'user_id' => 'required|integer',
-            'name' => 'required'
-        ]);
+        $data = $request->all();
         Area::create($data);
         return redirect()->route('area.index')->with(['success' => 'Area has been successfully created','status' => 'success']);
     }

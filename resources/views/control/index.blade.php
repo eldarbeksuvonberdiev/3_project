@@ -104,35 +104,45 @@
                                             <td>{{ $area->name }}</td>
                                             @foreach ($categories as $category)
                                                 <td>
-                                                    <a href="{{ route('control.task', [$area->id, $category->id, $status]) }}"
-                                                        target="_blank" class="btn btn-{{ $button }}">
-                                                        @php
-                                                            $query = $area_task
-                                                                ->where('category_id', $category->id)
-                                                                ->where('area_id', $area->id);
+                                                    @php
+                                                        $query = $area_task
+                                                            ->where('category_id', $category->id)
+                                                            ->where('area_id', $area->id);
 
-                                                            if ($status !== 'all') {
-                                                                $query = match ($status) {
-                                                                    'two_days' => $query->whereRaw(
+                                                        if ($status !== 'all') {
+                                                            $query = match ($status) {
+                                                                'two_days' => $query
+                                                                    ->whereRaw(
                                                                         'DATEDIFF(areaTask_deadline, CURDATE()) = 2',
-                                                                    ),
-                                                                    'one_day' => $query->whereRaw(
+                                                                    )
+                                                                    ->whereIn('status', [1, 2,]),
+                                                                'one_day' => $query
+                                                                    ->whereRaw(
                                                                         'DATEDIFF(areaTask_deadline, CURDATE()) = 1',
-                                                                    ),
-                                                                    'today' => $query->whereRaw(
+                                                                    )
+                                                                    ->whereIn('status', [1, 2,]),
+                                                                'today' => $query
+                                                                    ->whereRaw(
                                                                         'DATEDIFF(areaTask_deadline, CURDATE()) = 0',
-                                                                    ),
-                                                                    'passed' => $query->whereRaw(
+                                                                    )
+                                                                    ->whereIn('status', [1, 2,]),
+                                                                'passed' => $query
+                                                                    ->whereRaw(
                                                                         'DATEDIFF(areaTask_deadline, CURDATE()) < 0',
-                                                                    ),
-                                                                    default => $query,
-                                                                };
-                                                            }
+                                                                    )
+                                                                    ->whereIn('status', [1, 2,]),
+                                                                default => $query,
+                                                            };
+                                                        }
+                                                        $count = $query->count();
+                                                    @endphp
 
-                                                            $count = $query->count();
-                                                        @endphp
-                                                        {{ $count }}
-                                                    </a>
+                                                    @if ($count > 0)
+                                                        <a href="{{ route('control.task', [$area->id, $category->id, $status]) }}"
+                                                            target="_blank" class="btn btn-{{ $button }}">
+                                                            {{ $count }}
+                                                        </a>
+                                                    @endif
                                                 </td>
                                             @endforeach
                                         </tr>
