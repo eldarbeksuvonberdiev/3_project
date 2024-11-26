@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [LoginRegisterController::class, 'loginPage'])->name('login.main');
+Route::get('/forgot_password', [LoginRegisterController::class, 'forgot_password'])->name('forgot_password.main');
+Route::post('/forgot_password', [LoginRegisterController::class, 'forgotPassword'])->name('forgot_password');
 Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
 
 Route::get('/register', [LoginRegisterController::class, 'registerPage'])->name('register.main');

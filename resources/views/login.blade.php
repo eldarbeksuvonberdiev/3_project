@@ -3,6 +3,12 @@
 @section('title', 'Login')
 
 @section('content')
+    @if (session('success') && session('status'))
+        <div class="alert alert-{{ session('status') }} alert-dismissible fade show mt-3" role="alert">
+            <strong>{{ session('success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="login-box">
         <div class="login-logo">
             <a href="{{ route('login.main') }}"><b>Admin</b>LTE</a>
@@ -45,8 +51,11 @@
                         </div>
                     </div>
                 </form>
-                <p class="mb-0">
+                {{-- <p class="mb-0">
                     <a href="{{ route('register.main') }}" class="text-center">Register a new membership</a>
+                </p> --}}
+                <p class="mb-0">
+                    <a href="{{ route('forgot_password') }}" class="text-center">Fogot Password</a>
                 </p>
             </div>
         </div>

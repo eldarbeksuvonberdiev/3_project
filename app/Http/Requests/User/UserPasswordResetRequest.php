@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Statistics;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StatisticsFilterRequest extends FormRequest
+class UserPasswordResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,15 @@ class StatisticsFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start' => 'required|date',
-            'end' => 'required|date|after_or_equal:start',
+            'email' => 'required|email'
         ];
     }
 
     public function messages()
     {
         return [
-            'start.required' => 'Start is required', 
-            'start.date' => 'Start is must be a type of date', 
-            'end.required' => 'End is required', 
-            'end.date' => 'End is must be a type of date', 
-            'end.after_or_equal' => 'End is must be the same or after the start date' 
+            'email.required' => 'Email is required.',
+            'email.email' => 'Email is must be a type of email.',
         ];
     }
 }
