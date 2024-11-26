@@ -58,7 +58,7 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a data-toggle="dropdown" href="{{ route('notifications') }}">
                         <i class="far fa-comments"></i>
                         <span class="badge badge-danger navbar-badge"></span>
                     </a>

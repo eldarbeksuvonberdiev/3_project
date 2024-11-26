@@ -40,6 +40,7 @@ Route::middleware('check:admin')->group(function () {
     Route::resource('area', AreaController::class);
 
     Route::get('task-sort/{status}', [TaskController::class,'sort'])->name('task.sort');
+    Route::get('notifications', [AnswerController::class,'notifications'])->name('notifications');
 
     Route::resource('task', TaskController::class);
 

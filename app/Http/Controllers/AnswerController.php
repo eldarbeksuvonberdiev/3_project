@@ -46,4 +46,9 @@ class AnswerController extends Controller
         }
         return redirect()->back();
     }
+
+    public function notifications(){
+        $answers = Answer::where('status',1)->get();
+        return view('answer.notification',['answers' => $answers]);
+    }
 }
