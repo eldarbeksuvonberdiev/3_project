@@ -17,8 +17,8 @@ Route::get('/forgot_password', [LoginRegisterController::class, 'forgot_password
 Route::post('/forgot_password', [LoginRegisterController::class, 'forgotPassword'])->name('forgot_password');
 Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
 
-Route::get('/register', [LoginRegisterController::class, 'registerPage'])->name('register.main');
-Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
+// Route::get('/register', [LoginRegisterController::class, 'registerPage'])->name('register.main');
+// Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
 
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 // Route::get('/verify',[LoginRegisterController::class,'verification'])->name('verification');
