@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $models = User::orderBy('id','desc')->paginate(10);
-        return view('user.index',['models' => $models]);
+        $models = User::orderBy('id', 'desc')->paginate(10);
+
+        return view('user.index', ['models' => $models]);
     }
 
     /**
@@ -30,17 +33,15 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:5'
-        ]);
-        $data['password'] = Hash::make($data['password']);
-        User::create($data);
-        return redirect()->route('user.index')->with(['success' => 'User has been successfully created','status' => 'success']);
+        $data = $request->all();
 
+        $data['password'] = Hash::make($data['password']);
+
+        User::create($data);
+
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully created', 'status' => 'success']);
     }
 
     /**
@@ -56,25 +57,25 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('user.edit',['user' => $user]);
+        return view('user.edit', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'required|min:5'
         ]);
 
         $data['password'] = Hash::make($data['password']);
 
         $user->update($data);
-        
-        return redirect()->route('user.index')->with(['success' => 'User has been successfully updated','status' => 'warning']);
+
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully updated', 'status' => 'warning']);
     }
 
     /**
@@ -83,20 +84,21 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index')->with(['success' => 'User has been successfully deleted','status' => 'danger']);
-
+        return redirect()->route('user.index')->with(['success' => 'User has been successfully deleted', 'status' => 'danger']);
     }
 
 
-    public function profileIndex(){
-        $user = User::where('id','=',Auth::user()->id)->first();
-        return view('user.profile',['user' => $user]);
+    public function profileIndex()
+    {
+        $user = User::where('id', '=', Auth::user()->id)->first();
+        return view('user.profile', ['user' => $user]);
     }
 
-    public function profileUpdate(Request $request,User $user){
+    public function profileUpdate(Request $request, User $user)
+    {
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'. $user->id
+            'email' => 'required|email|unique:users,email,' . $user->id
         ]);
         if ($request->filled('password')) {
             $request->validate([

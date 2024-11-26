@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\AreaTask;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class TaskControlController extends Controller
 {

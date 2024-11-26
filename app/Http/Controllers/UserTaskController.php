@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserTask\UserTaskEditRequest;
+use App\Http\Requests\UserTask\UserTaskUpdateRequest;
 use App\Models\Answer;
 use App\Models\AreaTask;
 use App\Models\Task;
@@ -26,11 +28,8 @@ class UserTaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, AreaTask $user_task)
+    public function edit(UserTaskEditRequest $request, AreaTask $user_task)
     {
-        $request->validate([
-            'status' => 'required'
-        ]);
         $user_task->update(['status' => $request->status]);
         return redirect()->route('user_task.index');
     }
@@ -38,12 +37,10 @@ class UserTaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AreaTask $user_task)
-    {
-        $data = $request->validate([
-            'title' => 'required',
-            'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx'
-        ]);
+    public function update(UserTaskUpdateRequest $request, AreaTask $user_task)
+    {   
+        $data = $request->all();
+        
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();

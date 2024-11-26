@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\TaskStoreRequest;
+use App\Http\Requests\Task\TaskUpdateRequest;
 use App\Models\Area;
 use App\Models\AreaTask;
 use App\Models\Category;
@@ -40,23 +42,16 @@ class TaskController extends Controller
     {
         $categories = Category::all();
         $users = Area::all();
-        return view('task.create', ['categories' => $categories,'areas' => $users]);
+        return view('task.create', ['categories' => $categories, 'areas' => $users]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-        $data = $request->validate([
-            'doer' => 'required',
-            'title' => 'required',
-            'description' => 'nullable',
-            'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
-            'deadline' => 'required|date',
-            'category_id' => 'required|integer',
-            'area_id' => 'required|array',
-        ]);
+        $data = $request->all();
+
         $areas = $data['area_id'];
 
         if ($request->hasFile('file')) {
@@ -99,17 +94,10 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskUpdateRequest $request, Task $task)
     {
-        $data = $request->validate([
-            'category_id' => 'required|integer',
-            'doer' => 'required',
-            'title' => 'required',
-            'description' => 'nullable',
-            'file' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
-            'deadline' => 'required|date'
-        ]);
-
+        $data = $request->all();
+        
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
@@ -137,7 +125,7 @@ class TaskController extends Controller
     {
 
         $deadlines = $this->getTaskCounts();
-        
+
         $tasks = $this->sortTasksByStatus($status);
         return view('task.index', ['tasks' => $tasks, 'deadlines' => $deadlines]);
     }
