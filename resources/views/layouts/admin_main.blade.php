@@ -57,6 +57,12 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge"></span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -71,15 +77,17 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false">
                         @if (auth()->user()->role == 'user')
                             <li class="nav-item">
-                                <a href="{{ route('user_task.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'user_task' ? 'active' : '' }}" >
+                                <a href="{{ route('user_task.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'user_task' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
-                                        User Tasks 
+                                        User Tasks
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('profile.index') }}" class="nav-link {{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }}">
+                                <a href="{{ route('profile.index') }}"
+                                    class="nav-link {{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Profile
@@ -88,7 +96,8 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a href="{{ route('user.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'user' ? 'active' : '' }}">
+                                <a href="{{ route('user.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'user' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         User
@@ -96,7 +105,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('area.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'area' ? 'active' : '' }}">
+                                <a href="{{ route('area.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'area' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Area
@@ -104,7 +114,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('category.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'category' ? 'active' : '' }}">
+                                <a href="{{ route('category.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'category' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Category
@@ -112,7 +123,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('task.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'task' ? 'active' : '' }}">
+                                <a href="{{ route('task.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'task' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Tasks
@@ -120,7 +132,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('control.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'control' ? 'active' : '' }}">
+                                <a href="{{ route('control.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'control' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Control
@@ -128,7 +141,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('statistics.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'statistics' ? 'active' : '' }}">
+                                <a href="{{ route('statistics.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'statistics' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Statistics by Category
@@ -136,7 +150,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('category_statistics.index') }}" class="nav-link {{ explode('.',Route::currentRouteName())[0] == 'category_statistics' ? 'active' : '' }}">
+                                <a href="{{ route('category_statistics.index') }}"
+                                    class="nav-link {{ explode('.', Route::currentRouteName())[0] == 'category_statistics' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Statistics by Task Status
